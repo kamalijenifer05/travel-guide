@@ -25,13 +25,13 @@ function Places() {
     const renderPlaces = () => {
         return places.map((place) => (
             <PlaceCard >
-                <PlaceCardlink>
+                <PlaceCardlink to={`/place/${place.id}`}>
                     <PlaceImage src={place.image} alt={place.image} />
                     <PlaceBottomContainer>
                         <PlaceTitle>{place.name}</PlaceTitle>
                         <Location>
                             <LocationIcon
-                                src='' alt='image'
+                                src={require("../../assets/images/location.svg").default} alt='image'
                             />
                             <LocationName>{place.location}</LocationName>
                         </Location>
@@ -58,18 +58,73 @@ function Places() {
     );
 }
 
-const TopContainer = styled.div``;
+const TopContainer = styled.div`
+    width:90%;
+    margin: 100px auto 0;
+`;
 
-const Heading = styled.h1``;
-const Paragraph = styled.p``;
-const PlacesContainer = styled.ul``;
-const PlaceCard = styled.li``;
-const PlaceCardlink = styled(Link)``;
-const PlaceImage = styled.img``;
-const PlaceBottomContainer = styled.div``;
-const PlaceTitle = styled.h3``;
-const Location = styled.div``;
-const LocationIcon = styled.img``;
-const LocationName = styled.span``;
+const Heading = styled.h1`
+    font-size: 36px;
+    margin-bottom: 20px;
+`;
+
+const Paragraph = styled.p`
+    font-size: 22px;
+    color: #dfdfe2;
+`;
+
+const PlacesContainer = styled.ul`
+    display: flex;
+    flex-wrap: wrap;
+    width: 90%;
+    margin: 50px auto 0;
+    
+`;
+
+const PlaceCard = styled.li`
+    list-style: none;;
+    width: 23.5%;
+    margin-right: 2%;
+    margin-bottom: 25px;
+    text-decoration: none;
+    
+    &:nth-child(4n){
+        margin-right: 0;
+    }
+`;
+
+const PlaceCardlink = styled(Link)`
+    display: block;
+    appearance: none;
+    text-decoration: none;
+    color: blue;
+`;
+
+const PlaceImage = styled.img`
+    width: 100%;
+    display: block;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+`;
+
+const PlaceBottomContainer = styled.div`
+    padding: 10px 15px;
+`;
+
+const PlaceTitle = styled.h3`
+    margin-bottom: 10px;
+    font-size: 20px;
+`;
+
+const Location = styled.div`
+    display: flex;
+`;
+const LocationIcon = styled.img`
+    margin-right: 10PX;
+`;
+
+const LocationName = styled.span`
+    font-size: 18px;
+`;
 
 export default Places;

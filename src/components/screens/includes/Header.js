@@ -4,7 +4,7 @@ import styled from "styled-components";
 function Header() {
     return (
         <HeaderContainer>
-                <Logo src={require("../../../assets/images/logo.svg").default} />
+            <Logo src=""  alt="logo" />
 
             <RightBox>
                 <Button>Login</Button>
@@ -21,9 +21,22 @@ const HeaderContainer = styled.div`
     margin: 0 auto;
     width: 90%;
 `;
-const LeftBox = styled.div``;
-const LogoImage = styled.img``;
-const RightBox = styled.div``;
-const Button = styled.button``;
+const Logo = styled.img`
+    width: 150px;
+    display:block;
+`;
+const RightBox = styled.div`
+    display:flex;
+    align-items:center;
+`;
+const Button = styled.button`
+    background-color:#046bf7;
+    border-radius:4px;
+    padding: 13px 45px;
+    border:none;
+    color:white;
+    font-size: 18px;
+    font-weight: bold;
+`;
 
 export default Header;
