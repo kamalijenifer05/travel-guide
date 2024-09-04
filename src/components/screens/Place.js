@@ -1,10 +1,10 @@
-import React, { useEffect, useState, useContext} from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Header from './includes/Header';
 import { Helmet } from 'react-helmet';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
-import { UserContext} from '../../App';
+import { UserContext } from '../../App';
 
 function Place() {
 
@@ -14,8 +14,8 @@ function Place() {
     gallery: [],
   });
 
-  const {userData} = useContext(UserContext);
- 
+  const { userData } = useContext(UserContext);
+
 
   useEffect(() => {
     console.log(userData);
@@ -130,7 +130,6 @@ const GalleryImageItem = styled.li`
   &:first-child{
     grid-column-end: span 2;
     grid-row-end: span 2;
-    
   }
 `;
 

@@ -121,7 +121,6 @@ const Location = styled.div`
 `;
 const LocationIcon = styled.img`
     margin-right: 10PX;
-   
 `;
 
 const LocationName = styled.span`
