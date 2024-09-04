@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext} from 'react';
 import Header from './includes/Header';
 import { Helmet } from 'react-helmet';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
+import { UserContext} from '../../App';
 
 function Place() {
 
@@ -13,9 +14,17 @@ function Place() {
     gallery: [],
   });
 
+  const {userData} = useContext(UserContext);
+ 
+
   useEffect(() => {
+    console.log(userData);
     axios
-      .get(`https://traveller.talrop.works/api/v1/places/view/${id}`)
+      .get(`https://traveller.talrop.works/api/v1/places/protected/${id}`, {
+        headers: {
+          Authorization: `Bearer ${userData?.access}`,
+        },
+      })
       .then((response) => {
         setPlace(response.data.data);
       })
@@ -73,6 +82,7 @@ const MainContainer = styled.div`
 const Title = styled.h1`
   font-size:48px;
   margin-bottom: 15px;
+  color: maroon;
 `;
 
 const InfoContainer = styled.div`
@@ -100,7 +110,7 @@ const LocationIcon = styled.img`
 `;
 
 const LocationName = styled.span`
-  color: #9c9c9c;
+  color: blueviolet;
   font-weight: bold;
   font-size: 14px;
 `;
@@ -134,6 +144,7 @@ const SubHeading = styled.h3`
 `;
 const Description = styled.p`
 font-size: 16px;
-line-height: 1.6rem`;
+line-height: 1.6rem;
+`;
 
 export default Place;

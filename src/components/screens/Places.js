@@ -78,7 +78,6 @@ const PlacesContainer = styled.ul`
     flex-wrap: wrap;
     width: 90%;
     margin: 50px auto 0;
-    
 `;
 
 const PlaceCard = styled.li`
@@ -114,6 +113,7 @@ const PlaceBottomContainer = styled.div`
 const PlaceTitle = styled.h3`
     margin-bottom: 10px;
     font-size: 20px;
+    color: maroon;
 `;
 
 const Location = styled.div`
@@ -121,10 +121,12 @@ const Location = styled.div`
 `;
 const LocationIcon = styled.img`
     margin-right: 10PX;
+   
 `;
 
 const LocationName = styled.span`
     font-size: 18px;
+    color: blueviolet;
 `;
 
 export default Places;

@@ -1,48 +1,43 @@
-import React, { useState, useContext, useEffect} from 'react';
-import styled from 'styled-components';
+import React, { useState, useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { BASE_URL } from './baseurl';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { UserContext } from './App';
-import queryString from 'query-string';
+import { BASE_URL } from '../../baseurl';
+import styled from 'styled-components';
+import { UserContext } from '../../App';
 
-export default function Login() {
-    const [username, setUsername] = useState("");
+export default function Signup() {
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [message, setMessage] = useState("");
-    const [nextPath, setNextPath] = useState("");
 
-    const {updateUserData} = useContext(UserContext);
+    const { updateUserData} = useContext(UserContext);
 
     const navigate = useNavigate(); // Correct usage for v6
-
-    const location = useLocation();
-
-    useEffect(() =>{
-        const {search} =location;
-        const values = queryString.parse(search);
-        const {next} = values;
-        setNextPath(next);
-    }, []);
 
     const handleSubmit = (e) => {
         e.preventDefault();
         setMessage("");
 
         axios
-            .post(`${BASE_URL}/auth/token/`, { username, password })
+            .post(`${BASE_URL}/auth/register/`, { email, password, first_name: name,})
             .then((response) => {
-                let data = response.data;
-                localStorage.setItem("user_data", JSON.stringify(data));
-                updateUserData({type: "LOGIN", payload:data});
-                nextPath ? navigate(nextPath) : navigate("/"); // Correct usage for v6
+                let data = response.data.data;
+                let status_code = response.data.StatusCode;
+                if (status_code === 6000) {
+                    console.log(response.data);
+                    localStorage.setItem("user_data", JSON.stringify(data));
+                    updateUserData({type: "LOGIN", payload:data});
+                    navigate("/"); 
+                }else{
+                    setMessage(response.data.message);
+                }
+                
             })
             .catch((error) => {
                 console.log(error.response);
                 if (error.response && error.response.status === 401) {
                     setMessage(error.response.data.detail);
-                } else {
-                    setMessage("An error occurred. Please try again.");
                 }
             });
     };
@@ -52,7 +47,7 @@ export default function Login() {
             <LeftContainer>
                 <HeaderContainer>
                     <Logo
-                        src={require("../src/assets/images/location.svg").default}
+                        src= ""
                         alt="image"
                     />
                 </HeaderContainer>
@@ -64,30 +59,34 @@ export default function Login() {
 
             <RightContainer>
                 <LoginContainer>
-                    <LoginHeading>Login to your Account</LoginHeading>
-                    <LoginInfo>Enter email and password to login</LoginInfo>
+                    <LoginHeading>Register into an Account</LoginHeading>
+                    <LoginInfo>Create an account to access all the features</LoginInfo>
                     <Form onSubmit={handleSubmit}>
                         <InputContainer>
                             <TextInput
-                                onChange={(e) => setUsername(e.target.value)}
-                                value={username}
-                                type="email"
-                                placeholder="Email"
-                            />
+                                onChange={(e) => setName(e.target.value)}
+                                value={name}
+                                type="text"
+                                placeholder="Name" />
                         </InputContainer>
-
+                        <InputContainer>
+                            <TextInput
+                                onChange={(e) => setEmail(e.target.value)}
+                                value={email}
+                                type="email"
+                                placeholder="Email" />
+                        </InputContainer>
                         <InputContainer>
                             <TextInput
                                 onChange={(e) => setPassword(e.target.value)}
                                 value={password}
                                 type="password"
-                                placeholder="Password"
-                            />
+                                placeholder="Password" />
                         </InputContainer>
-                        <LoginButton to="/auth/create/">Signup Now</LoginButton>
+                        <LoginButton to="/auth/login/">Login Now</LoginButton>
                         {message && <ErrorMessage>{message}</ErrorMessage>}
                         <ButtonContainer>
-                            <SubmitButton type="submit">Login</SubmitButton>
+                            <SubmitButton>Create an Account</SubmitButton>
                         </ButtonContainer>
                     </Form>
                 </LoginContainer>
@@ -95,9 +94,6 @@ export default function Login() {
         </Container>
     );
 }
-
-// Styled components definitions go here
-
 
 const Container =styled.div`
     min-height: 100vh;
